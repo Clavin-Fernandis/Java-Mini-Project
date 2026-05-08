@@ -12,8 +12,6 @@
 
 <form action="add" method="post">
 
-<input type="number" name="id" placeholder="Reservation ID" required>
-
 <input type="text" name="name" placeholder="Customer Name" required>
 
 <input type="text" name="room" placeholder="Room Number" required>
@@ -24,7 +22,12 @@
 <label>Check Out</label>
 <input type="date" name="checkout" required>
 
-<input type="number" step="0.01" name="amount" placeholder="Total Amount" required>
+<input type="number"
+step="0.01"
+min="0"
+name="amount"
+placeholder="Total Amount"
+required>
 
 <button type="submit">Book Now</button>
 

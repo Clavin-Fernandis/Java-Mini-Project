@@ -11,6 +11,22 @@
 
 <h2>Reservation Records</h2>
 
+<!-- SEARCH BAR -->
+<form action="search" method="get">
+
+<input type="text"
+name="keyword"
+placeholder="Search by name or room"
+required>
+
+<button type="submit">Search</button>
+
+<a href="display" style="margin-left:10px;">Reset</a>
+
+</form>
+
+<br>
+
 <table>
 
 <tr>
@@ -26,7 +42,7 @@
 List<Reservation> list =
 (List<Reservation>)request.getAttribute("data");
 
-if(list!=null){
+if(list!=null && !list.isEmpty()){
 for(Reservation r:list){
 %>
 
@@ -41,6 +57,14 @@ for(Reservation r:list){
 
 <%
 }
+}else{
+%>
+
+<tr>
+<td colspan="6">No results found</td>
+</tr>
+
+<%
 }
 %>
 

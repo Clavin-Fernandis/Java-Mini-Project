@@ -1,25 +1,50 @@
 package com.hotel.servlet;
 
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.hotel.dao.ReservationDAO;
 
-public class DeleteReservationServlet extends HttpServlet{
+public class DeleteReservationServlet extends HttpServlet {
 
-protected void doPost(HttpServletRequest request,
-HttpServletResponse response)
-throws ServletException,IOException{
+    protected void doPost(HttpServletRequest request,
+            HttpServletResponse response)
+            throws ServletException, IOException {
 
-int id=Integer.parseInt(
-request.getParameter("id"));
+        try {
 
-ReservationDAO dao=new ReservationDAO();
+            int id = Integer.parseInt(
+                    request.getParameter("id"));
 
-dao.deleteReservation(id);
+            // Prevent negative or zero ID
+            if (id <= 0) {
+                response.sendRedirect(
+                        "reservationdelete.jsp?msg=invalid");
+                return;
+            }
 
-response.sendRedirect("index.jsp");
+            ReservationDAO dao =
+                    new ReservationDAO();
 
-}
+            boolean status =
+                    dao.deleteReservation(id);
+
+            if (status)
+                response.sendRedirect(
+                 "reservationdelete.jsp?msg=success");
+            else
+                response.sendRedirect(
+                 "reservationdelete.jsp?msg=fail");
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            response.sendRedirect(
+              "reservationdelete.jsp?msg=error");
+        }
+    }
 }
